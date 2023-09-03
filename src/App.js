@@ -1,27 +1,39 @@
 import logo from './logo.svg';
 import './App.css';
 
-function Card({ title, subtitle }) {
-  return (
-    <div style={styles.card}>
-      <h1 style={styles.title}>{title}</h1>
-      {subtitle ? (
-        <h2 style={styles.subtitle}>{subtitle}</h2>
-      ) : (
-        <h3 style={styles.empty}>No subtitle</h3>
-      )}
-    </div>
-  )
+function Card({ loading, error, title, subtitle }) {
+  let content
+
+  if (error) {
+    content = 'Error'
+  } else if (loading) {
+    content = <h3 style={styles.empty}>Loading...</h3>
+  } else {
+    content = (
+      <div>
+        <h1 style={styles.title}>{title}</h1>
+        {subtitle ? (
+          <h2 style={styles.subtitle}>{subtitle}</h2>
+        ) : (
+          <h3 style={styles.empty}>No subtitle</h3>
+        )}
+      </div>
+    )
+  }
+
+  return <div style={styles.card}>{content}</div>
 }
 
 function App() {
   return (
     <div>
-      <Card title={'Title'} />
-      <Card title={'Title'} subtitle={'Subtitle'} />
+      <Card error={true} />
+      <Card loading={true} />
+      <Card loading={false} title={'Title'} subtitle={'Subtitle'} />
     </div>
   )
 }
+
 
 const styles = {
   card: {
