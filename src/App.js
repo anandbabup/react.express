@@ -5,7 +5,11 @@ function Card({ title, subtitle }) {
   return (
     <div style={styles.card}>
       <h1 style={styles.title}>{title}</h1>
-      {subtitle && <h2 style={styles.subtitle}>{subtitle}</h2>}
+      {subtitle ? (
+        <h2 style={styles.subtitle}>{subtitle}</h2>
+      ) : (
+        <h3 style={styles.empty}>No subtitle</h3>
+      )}
     </div>
   )
 }
@@ -35,6 +39,11 @@ const styles = {
   subtitle: {
     fontSize: '14px',
     lineHeight: '18px',
+  },
+  empty: {
+    fontSize: '12px',
+    lineHeight: '15px',
+    opacity: '0.5',
   },
 }
 export default App;
