@@ -3,13 +3,18 @@ import './App.css';
 import React, { useState, useEffect } from 'react'
 
 
+function randomColor() {
+  return `#${Math.random()
+    .toString(16)
+    .substr(-6)}`
+}
+
 function App() {
   const [count, setCount] = useState(0)
-  const color = count % 5 === 0 ? 'red' : 'blue'
 
   useEffect(() => {
-    document.body.style.backgroundColor = color
-  }, [color])
+    document.body.style.backgroundColor = randomColor()
+  })
 
   return (
     <button
