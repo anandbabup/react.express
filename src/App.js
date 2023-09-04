@@ -1,8 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import React from 'react'
+import React, { useContext } from 'react'
 
-function Title({ theme }) {
+const ThemeContext = React.createContext()
+
+function Title() {
+  const theme = useContext(ThemeContext)
   const style = {
     background: theme.primary,
     color: theme.text,
@@ -11,21 +14,25 @@ function Title({ theme }) {
   return <h1 style={style}>Title</h1>
 }
 
-function Nested({ theme }) {
-  return <Title theme={theme} />
+function Nested() {
+  return <Title />
 }
 
-function NestedTwice({ theme }) {
-  return <Nested theme={theme} />
+function NestedTwice() {
+  return <Nested />
 }
 
 function App() {
   const theme = {
-    primary: 'dodgerblue',
-    text: 'white',
+    primary: 'darkgreen',
+    text: 'white'
   }
 
-  return <NestedTwice theme={theme} />
+  return (
+    <ThemeContext.Provider value={theme}>
+      <NestedTwice />
+    </ThemeContext.Provider>
+  )
 }
 
 
