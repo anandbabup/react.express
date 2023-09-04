@@ -1,28 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, memo, useMemo } from 'react'
+import React, { useState, memo, useCallback, useEffect } from 'react'
 
-
-const Heading = memo(({ style, title }) => {
-  console.log('Rendered:', title)
-
-  return <h1 style={style}>{title}</h1>
+const Logger = memo((props) => {
+  props.log()
+  return null
 })
 
 function App() {
   const [count, setCount] = useState(0)
+  const count5 = Math.floor(count / 5)
 
-  const normalStyle = {
-    backgroundColor: 'teal',
-    color: 'white',
+  const memoizedFunction = useCallback(() => {
+    console.log('useCallback')
+  }, [count5])
+
+  const normalFunction = () => {
+    console.log('normal')
   }
-
-  const memoizedStyle = useMemo(() => {
-    return {
-      backgroundColor: 'red',
-      color: 'white',
-    }
-  }, [])
 
   return (
     <>
@@ -33,8 +28,8 @@ function App() {
       >
         Increment {count}
       </button>
-      <Heading style={memoizedStyle} title="Memoized" />
-      <Heading style={normalStyle} title="Normal" />
+      <Logger log={memoizedFunction} />
+      <Logger log={normalFunction} />
     </>
   )
 }
