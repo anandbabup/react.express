@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     document.body.style.backgroundColor = randomColor()
-  })
+  },[])
 
   return (
     <button
