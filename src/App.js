@@ -1,40 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, memo, useMemo } from 'react'
-
-
-const Heading = memo(({ style, title }) => {
-  console.log('Rendered:', title)
-
-  return <h1 style={style}>{title}</h1>
-})
+import React, { useState, useRef, useEffect } from 'react'
 
 function App() {
+  const intervalRef = useRef()
   const [count, setCount] = useState(0)
 
-  const normalStyle = {
-    backgroundColor: 'teal',
-    color: 'white',
-  }
+  useEffect(() => {
+    intervalRef.current = setInterval(() => setCount(count => count + 1), 1000)
 
-  const memoizedStyle = useMemo(() => {
-    return {
-      backgroundColor: 'red',
-      color: 'white',
+    return () => {
+      clearInterval(intervalRef.current)
     }
   }, [])
 
   return (
     <>
+      <div style={{ fontSize: 120 }}>{count}</div>
       <button
         onClick={() => {
-          setCount(count + 1)
+          clearInterval(intervalRef.current)
         }}
       >
-        Increment {count}
+        Stop
       </button>
-      <Heading style={memoizedStyle} title="Memoized" />
-      <Heading style={normalStyle} title="Normal" />
     </>
   )
 }
