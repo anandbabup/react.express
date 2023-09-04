@@ -1,29 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect } from 'react'
+import React, { useState, memo, useMemo } from 'react'
 
 
-function randomColor() {
-  return `#${Math.random()
-    .toString(16)
-    .substr(-6)}`
-}
+const Heading = memo(({ style, title }) => {
+  console.log('Rendered:', title)
+
+  return <h1 style={style}>{title}</h1>
+})
 
 function App() {
   const [count, setCount] = useState(0)
 
-  useEffect(() => {
-    document.body.style.backgroundColor = randomColor()
-  },[])
+  const normalStyle = {
+    backgroundColor: 'teal',
+    color: 'white',
+  }
+
+  const memoizedStyle = useMemo(() => {
+    return {
+      backgroundColor: 'red',
+      color: 'white',
+    }
+  }, [])
 
   return (
-    <button
-      onClick={() => {
-        setCount(count + 1)
-      }}
-    >
-      Click HERE to increment: {count}
-    </button>
+    <>
+      <button
+        onClick={() => {
+          setCount(count + 1)
+        }}
+      >
+        Increment {count}
+      </button>
+      <Heading style={memoizedStyle} title="Memoized" />
+      <Heading style={normalStyle} title="Normal" />
+    </>
   )
 }
 
