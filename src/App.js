@@ -1,22 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
+
+function Title({ theme }) {
+  const style = {
+    background: theme.primary,
+    color: theme.text,
+  }
+
+  return <h1 style={style}>Title</h1>
+}
+
+function Nested({ theme }) {
+  return <Title theme={theme} />
+}
+
+function NestedTwice({ theme }) {
+  return <Nested theme={theme} />
+}
 
 function App() {
-  const canvasRef = useRef()
+  const theme = {
+    primary: 'dodgerblue',
+    text: 'white',
+  }
 
-  useEffect(() => {
-    const canvas = canvasRef.current
-    const context = canvas.getContext('2d')
-
-    context.fillStyle = 'rgba(59, 108, 212, 0.5)'
-    context.fillRect(10, 10, 50, 50)
-
-    context.fillStyle = 'rgb(59, 108, 212)'
-    context.fillRect(30, 30, 50, 50)
-  }, [])
-
-  return <canvas ref={canvasRef} />
+  return <NestedTwice theme={theme} />
 }
 
 
