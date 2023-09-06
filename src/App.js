@@ -1,10 +1,24 @@
+import {useEffect, useState} from 'react'
 import './App.css';
+import Todo from './Todo';
 
 function App() {
+  const [todo, setTodo] = useState(["Eat"]);
+  const [newTodo, setNewTodo] = useState();
+ 
+  const addTask = (e)=> {
+     e.preventDefault();
+     setTodo([...todo, newTodo]);
+  }
+
+  useEffect(()=>{
+
+  },[todo])
+  
   return (
     <div className="todoapp stack-large">
       <h1>Todo App</h1>
-      <form>
+      <form onSubmit={addTask}>
         <h2 className="label-wrapper">
           <label htmlFor="new-todo-input" className="label__lg">
             What needs to be done?
@@ -16,6 +30,9 @@ function App() {
           className="input input__lg"
           name="text"
           autoComplete="off"
+          onChange={(event) =>
+            setNewTodo(event.target.value)
+          }
         />
         <button type="submit" className="btn btn__primary btn__lg">
           Add
@@ -38,24 +55,7 @@ function App() {
           <span className="visually-hidden"> tasks</span>
         </button>
       </div>
-      <h2 id="list-heading">3 tasks remaining</h2>
-      <ul
-        className="todo-list stack-large stack-exception"
-        aria-labelledby="list-heading">
-        <li className="todo stack-small">
-          <div className="c-cb">
-            <input id="todo-0" type="checkbox" defaultChecked={true} />
-            <label className="todo-label" htmlFor="todo-0">
-              Eat
-            </label>
-            <span>
-              <i className="fa fa-edit"></i>
-              <i className="fa fa-trash"></i>
-            </span>
-          </div>
-
-        </li>
-      </ul>
+      <Todo items={todo}></Todo>
     </div>
   );
 }
